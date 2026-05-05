@@ -122,9 +122,26 @@ function applyCoupon(code) {
             heroBtn.disabled = true;
         }
         trackEvent('coupon_applied', { code: upper, discount_percentage: DISCOUNT_PERCENTAGE, original_price: ORIGINAL_PRICE, final_price: finalPrice });
+        showDiscountModal(upper, disc, finalPrice);
         return true;
     }
     return false;
+}
+
+function showDiscountModal(code, discount, finalPrice) {
+    var modal = document.getElementById('discount-modal');
+    if (!modal) return;
+    var dmCode = document.getElementById('dm-code');
+    var dmOrig = document.getElementById('dm-original');
+    var dmDisc = document.getElementById('dm-discount');
+    var dmPct = document.getElementById('dm-percent');
+    var dmFinal = document.getElementById('dm-final');
+    if (dmCode) dmCode.textContent = code;
+    if (dmOrig) dmOrig.textContent = formatBRL(ORIGINAL_PRICE);
+    if (dmDisc) dmDisc.textContent = '- ' + formatBRL(discount);
+    if (dmPct) dmPct.textContent = Math.round(DISCOUNT_PERCENTAGE * 100) + '%';
+    if (dmFinal) dmFinal.textContent = formatBRL(finalPrice);
+    modal.classList.add('active');
 }
 
 // ========================================
@@ -212,6 +229,23 @@ async function generatePixSDK() {
 document.addEventListener('DOMContentLoaded', function() {
     trackEvent('checkout_viewed');
 
+    // Discount modal close — se cupom foi aplicado via submit, "Continuar" fecha modal e dispara PIX
+    var dmCloseBtn = document.getElementById('dm-close-btn');
+    var dmOverlay = document.getElementById('discount-modal');
+    function closeDiscountModal() {
+        if (dmOverlay) dmOverlay.classList.remove('active');
+        if (_couponSource === 'submit') {
+            _couponSource = null;
+            collectAndGenerate();
+        } else {
+            _couponSource = null;
+        }
+    }
+    if (dmCloseBtn && dmOverlay) {
+        dmCloseBtn.addEventListener('click', closeDiscountModal);
+        dmOverlay.addEventListener('click', function(e) { if (e.target === dmOverlay) closeDiscountModal(); });
+    }
+
     var emailEl = document.getElementById('email');
     var emailConfEl = document.getElementById('email-confirm');
     var nomeEl = document.getElementById('nome');
@@ -283,11 +317,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (applyCoupon(code)) {
             popupInput.classList.add('valid');
             popupMessage.textContent = 'Cupom aplicado!'; popupMessage.className = 'popup-message success';
-            setTimeout(function() {
-                couponOverlay.classList.remove('active');
-                if (_couponSource === 'submit') collectAndGenerate();
-                _couponSource = null;
-            }, 800);
+            // Fecha o popup do cupom rapido — o discount modal ja foi aberto pelo applyCoupon
+            setTimeout(function() { couponOverlay.classList.remove('active'); }, 300);
         } else {
             popupInput.classList.add('invalid');
             popupMessage.textContent = 'Codigo invalido.'; popupMessage.className = 'popup-message error';
