@@ -5,7 +5,7 @@
 
 var VALID_COUPONS = ["TRIBUTARISTA50"];
 var ORIGINAL_PRICE = 2697.00;
-var DISCOUNT_PERCENTAGE = 0.50;
+var DISCOUNT_PERCENTAGE = 0.90;
 var REDIRECT_URL = './obrigado.html';
 
 var couponApplied = false;
@@ -163,7 +163,7 @@ async function generatePixSDK() {
             email: formData.email,
             phone: formatPhoneForAPI(formData.telefone)
         },
-        items: [{ name: 'Tributarista Referência', price: price, quantity: 1 }]
+        items: [{ name: 'Tributarista Referência - Nova Era da Prática Tributária', price: price, quantity: 1 }]
     };
 
     try {
