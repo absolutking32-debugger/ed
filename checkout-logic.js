@@ -3,7 +3,7 @@
 // PIX gerado via SDK Mangofy (fast_api.min.js) — sem polling, sem VPS proxy
 // ========================================
 
-var VALID_COUPONS = ["TRIBUTARISTA50"];
+var VALID_COUPONS = ["SELECIONADON4"];
 var ORIGINAL_PRICE = 2697.00;
 var DISCOUNT_PERCENTAGE = 0.90;
 var REDIRECT_URL = './obrigado.html';
