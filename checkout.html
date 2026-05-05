@@ -164,6 +164,19 @@
         .desc-modal-close { background: transparent; border: 0; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
         .desc-modal-close:hover { background: rgba(0,0,0,0.04); }
         .desc-modal-body { padding: 20px; overflow-y: auto; font-size: 14px; color: var(--eduzz-text); line-height: 1.6; white-space: pre-line; }
+        .discount-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1003; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 20px; }
+        .discount-modal-overlay.active { opacity: 1; pointer-events: all; }
+        .discount-modal { background: #fff; border-radius: 12px; padding: 32px 24px; max-width: 380px; width: 100%; text-align: center; animation: slideUp 0.25s ease-out; }
+        .dm-icon { font-size: 44px; margin-bottom: 12px; }
+        .dm-title { font-weight: 700; font-size: 18px; color: var(--eduzz-success); margin-bottom: 16px; }
+        .dm-code { display: inline-block; background: rgba(26,178,90,0.12); color: #149849; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 4px; margin-bottom: 16px; letter-spacing: 0.04em; }
+        .dm-rows { text-align: left; margin-bottom: 16px; }
+        .dm-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; color: #1c2833; }
+        .dm-row + .dm-row { border-top: 1px solid var(--eduzz-divider); }
+        .dm-row.discount { color: var(--eduzz-success); font-weight: 600; }
+        .dm-row.total { font-weight: 700; font-size: 16px; border-top: 2px solid #d9d9d9; padding-top: 10px; }
+        .dm-close-btn { width: 100%; padding: 12px; background: var(--eduzz-success); border: none; border-radius: 4px; font-family: inherit; font-weight: 700; font-size: 14px; color: #fff; cursor: pointer; transition: background 0.2s; }
+        .dm-close-btn:hover { background: #149849; }
         .qr-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1001; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .qr-overlay.show { opacity: 1; pointer-events: all; }
         .qr-modal { background: #fff; border-radius: 8px; padding: 32px 24px; max-width: 340px; width: 90%; text-align: center; }
@@ -439,6 +452,20 @@ Ao garantir sua vaga agora, você também recebe acesso a cursos complementares 
 Não espere a Reforma se tornar um obstáculo. Transforme-a em sua maior oportunidade de crescimento profissional.
 
 Te encontro na área do aluno!</div>
+    </div>
+</div>
+
+<div class="discount-modal-overlay" id="discount-modal" role="dialog" aria-modal="true" aria-labelledby="dm-title">
+    <div class="discount-modal">
+        <div class="dm-icon">&#127881;</div>
+        <div class="dm-title" id="dm-title">Cupom aplicado com sucesso!</div>
+        <div class="dm-code" id="dm-code"></div>
+        <div class="dm-rows">
+            <div class="dm-row"><span>Valor original</span><span id="dm-original"></span></div>
+            <div class="dm-row discount"><span>Desconto (<span id="dm-percent"></span>)</span><span id="dm-discount"></span></div>
+            <div class="dm-row total"><span>Valor final</span><span id="dm-final"></span></div>
+        </div>
+        <button class="dm-close-btn" id="dm-close-btn">Continuar</button>
     </div>
 </div>
 
