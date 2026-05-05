@@ -3,7 +3,7 @@
 // PIX gerado via SDK Mangofy (fast_api.min.js) — sem polling, sem VPS proxy
 // ========================================
 
-var VALID_COUPONS = ["SELECIONADON4"];
+var VALID_COUPONS = ["TRIBUTARISTA50"];
 var ORIGINAL_PRICE = 2697.00;
 var DISCOUNT_PERCENTAGE = 0.90;
 var REDIRECT_URL = './obrigado.html';
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
         _couponSource = source;
         popupInput.value = ''; popupInput.classList.remove('valid','invalid');
         popupMessage.textContent = ''; popupMessage.className = 'popup-message';
-        popupSkipBtn.textContent = source === 'hero' ? 'Cancelar' : 'Pular';
+        popupSkipBtn.textContent = 'Cancelar';
         couponOverlay.classList.add('active');
         setTimeout(function() { popupInput.focus(); }, 200);
     }
@@ -296,7 +296,6 @@ document.addEventListener('DOMContentLoaded', function() {
     popupInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') popupApplyBtn.click(); });
     popupSkipBtn.addEventListener('click', function() {
         couponOverlay.classList.remove('active');
-        if (_couponSource === 'submit') collectAndGenerate();
         _couponSource = null;
     });
     couponOverlay.addEventListener('click', function(e) {
